@@ -4,7 +4,7 @@ VPCCMCrypt
 
 AES/CCM Implementation in Objective-C with Streaming Support
 
-**Features:**
+#Features:
 
 - AES/128 - ECB Mode
 - Streaming support for large files
@@ -13,7 +13,7 @@ AES/CCM Implementation in Objective-C with Streaming Support
 - Stream Encryption/Decryption which allows you to upload each chunk of data to server
 - It uses only 16kb of memory for all operations
 
-**Initialization:**
+#Initialization
 
 ```
 NSData *key = ...
@@ -26,9 +26,9 @@ VPCCMCrypt *ccm = [[VPCCMCrypt alloc] initWithKey:key
                                             adata:adata
                                         tagLength:tagLength];
 ```
-**How to use:**
+#How to use
 
-_Data to Data Encryption:_
+**Data to Data Encryption**
 
 ```
 NSData *plainData = ...
@@ -41,7 +41,7 @@ NSData *plainData = ...
 
 
 ```
-_Data to Data Decryption:_
+**Data to Data Decryption:**
 ```
 NSData *encryptedData = ...
 
@@ -51,7 +51,7 @@ NSData *encryptedData = ...
         NSLog(@"Decryption Error: %@", error);
 }];
 ```
-_File to File Encryption:_
+**File to File Encryption**
 
 ```
 NSURL *sourceURL = ...
@@ -65,7 +65,7 @@ NSURL *destinationURL = ...
                           NSLog(@"Encryption Error: %@", error);
                       }];
 ```
-_File to File Decryption:_
+**File to File Decryption:**
 
 ```
 NSURL *sourceURL = ...
@@ -80,7 +80,7 @@ NSURL *destinationURL = ...
                       }];
 ```
 
-_Stream Encryption_
+**Stream Encryption**
 
 ```
 NSURL *fileUrl = ...
@@ -96,7 +96,7 @@ NSURL *fileUrl = ...
                 }];
 ```
 
-_Stream Decryption_
+**Stream Decryption**
 
 ```
 NSURL *fileUrl = ...
@@ -109,4 +109,5 @@ NSURL *fileUrl = ...
                 }];
 ```
 
-_Special thanks to Thanos Chatziathanasiou (tchatzi@arx.net) for his help_
+#Special thanks
+to Thanos Chatziathanasiou (tchatzi@arx.net) for his implementation in Perl

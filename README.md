@@ -33,8 +33,9 @@ VPCCMCrypt *ccm = [[VPCCMCrypt alloc] initWithKey:key
 ```
 NSData *plainData = ...
 
-[ccm encryptDataWithData:plainData finishedBlock:^(NSData *data) {
-        //Do something with data
+[ccm encryptDataWithData:plainData 
+           finishedBlock:^(NSData *data) {
+           //Do something with data
 } errorBlock:^(NSError *error) {
         NSLog(@"Encryption Error: %@", error);
 }];
@@ -45,7 +46,8 @@ NSData *plainData = ...
 ```
 NSData *encryptedData = ...
 
-[ccm decryptDataWithData:encryptedData finishedBlock:^(NSData *data) {
+[ccm decryptDataWithData:encryptedData 
+           finishedBlock:^(NSData *data) {
         //Do something with data
 } errorBlock:^(NSError *error) {
         NSLog(@"Decryption Error: %@", error);
@@ -84,6 +86,7 @@ NSURL *destinationURL = ...
 
 ```
 NSURL *fileUrl = ...
+
 [ccm encryptStreamWithUrl:fileUrl
                 dataBlock:^(NSData *data, BOOL isLastBlock) {
                     if (isLastBlock) {
@@ -100,6 +103,7 @@ NSURL *fileUrl = ...
 
 ```
 NSURL *fileUrl = ...
+
 [ccm decryptStreamWithUrl:fileUrl
                 dataBlock:^(NSData *data, BOOL isLastBlock) {
                     //Do something with the decrypted data

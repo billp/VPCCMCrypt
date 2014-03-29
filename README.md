@@ -113,5 +113,5 @@ NSURL *fileUrl = ...
                 }];
 ```
 
-#Special thanks
+#Thanks
 to Thanos Chatziathanasiou (tchatzi@arx.net) for his implementation in Perl

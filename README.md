@@ -4,7 +4,7 @@ VPCCMCrypt
 
 AES/CCM Implementation in Objective-C with Streaming Support
 
-#Features:
+#Features
 
 - AES/128 - ECB Mode
 - Streaming support for large files
@@ -12,6 +12,14 @@ AES/CCM Implementation in Objective-C with Streaming Support
 - File to File Encryption/Decryption
 - Stream Encryption/Decryption which allows you to upload each chunk of data to server
 - It uses only 16kb of memory for all operations
+
+#Installation
+
+add these lines to your Podfile
+```
+platform :ios, '6.0'
+pod 'VPCCMCrypt', '~> 0.0.1'
+```
 
 #Initialization
 

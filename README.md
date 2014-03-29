@@ -2,7 +2,7 @@ VPCCMCrypt
 ==========
 
 
-AES/CCM Implementation in Objective-C with Streaming Support
+AES/CCM Implementation in Objective-C for iOS with Streaming Support
 
 #Features
 

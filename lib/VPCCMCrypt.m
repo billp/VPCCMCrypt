@@ -3,6 +3,7 @@
 //  VPCCMCrypt
 //
 //  Created by Bill Panagiotopoulos on 3/23/14.
+//  Copyright (c) 2014. All rights reserved.
 //
 
 #import "VPCCMCrypt.h"

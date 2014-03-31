@@ -3,7 +3,6 @@
 //  VPCCMCrypt
 //
 //  Created by Bill Panagiotopoulos on 3/23/14.
-//  Copyright (c) 2014 Arx.net. All rights reserved.
 //
 
 #import "VPCCMCrypt.h"
@@ -12,7 +11,7 @@
 
 #define _blocksCount 1024
 
-NSString *const ANPushServiceError  = @"com.vpccmcrypt.CryptError";
+NSString *const VPCCMCryptErrorDomain  = @"com.vpccmcrypt.CryptError";
 
 @implementation VPCCMCrypt
 
@@ -358,7 +357,7 @@ NSString *const ANPushServiceError  = @"com.vpccmcrypt.CryptError";
                    errorNumber:(NSInteger)number {
     NSDictionary *errorDict = @{NSLocalizedDescriptionKey : message};
     
-    return [[NSError alloc] initWithDomain:ANPushServiceError
+    return [[NSError alloc] initWithDomain:VPCCMCryptErrorDomain
                                       code:number
                                   userInfo:errorDict];
 }

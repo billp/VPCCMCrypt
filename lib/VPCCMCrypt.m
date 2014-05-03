@@ -65,23 +65,25 @@ NSString *const VPCCMCryptErrorDomain  = @"com.vpccmcrypt.CryptError";
         
         while ([inputStream hasBytesAvailable])
         {
-            long bytesRead = [inputStream read:buffer maxLength:_bufferSize];
-            
-            if (bytesRead > 0) {
+            @autoreleasepool {
+                long bytesRead = [inputStream read:buffer maxLength:_bufferSize];
                 
-                NSData *encrypted = [[NSData alloc] initWithBytesNoCopy:
-                                     [ccmIstance encryptBlock:buffer
-                                                       length:bytesRead]
-                                                       length:bytesRead
-                                                 freeWhenDone:NO];
-                
-                if (ccmIstance.errorMessage != nil) {
-                    NSError *error = [self createErrorObject:ccmIstance.errorMessage errorNumber:3];
-                    errorBlock(error);
-                    return;
+                if (bytesRead > 0) {
+                    
+                    NSData *encrypted = [[NSData alloc] initWithBytesNoCopy:
+                                         [ccmIstance encryptBlock:buffer
+                                                           length:bytesRead]
+                                                                     length:bytesRead
+                                                               freeWhenDone:NO];
+                    
+                    if (ccmIstance.errorMessage != nil) {
+                        NSError *error = [self createErrorObject:ccmIstance.errorMessage errorNumber:3];
+                        errorBlock(error);
+                        return;
+                    }
+                    
+                    dataBlock(encrypted, NO);
                 }
-                
-                dataBlock(encrypted, NO);
             }
         }
     
@@ -103,10 +105,8 @@ NSString *const VPCCMCryptErrorDomain  = @"com.vpccmcrypt.CryptError";
     
     [self encryptStreamWithUrl:sourceURL dataBlock:^(NSData *data, BOOL isLastBlock) {
 
-        
-        
         if ([outputStream hasSpaceAvailable]) {
-            [outputStream write:[data bytes] maxLength:data.length];
+            [outputStream write:data.bytes maxLength:data.length];
         }
 
         if (isLastBlock) {
@@ -209,38 +209,40 @@ NSString *const VPCCMCryptErrorDomain  = @"com.vpccmcrypt.CryptError";
             
             while ([inputStream hasBytesAvailable])
             {
-                long bytesRead = [inputStream read:buffer maxLength:_bufferSize];
-                
-                if (_bytesLeft-bytesRead <= _blockSize) {
-                    bytesRead -= _tagLength-(_bytesLeft-bytesRead);
-                    if (bytesRead == 0) {
+                @autoreleasepool {
+                    long bytesRead = [inputStream read:buffer maxLength:_bufferSize];
+                    
+                    if (_bytesLeft-bytesRead <= _blockSize) {
+                        bytesRead -= _tagLength-(_bytesLeft-bytesRead);
+                        if (bytesRead == 0) {
+                            break;
+                        }
+                    }
+                    
+                    NSInteger exitNext = 0;
+                    
+                    NSData *decrypted = [[NSData alloc] initWithBytesNoCopy:
+                                         [ccmIstance decryptBlock:buffer
+                                                           length:bytesRead
+                                                         exitNext:&exitNext]
+                                                                     length:bytesRead
+                                                               freeWhenDone:NO];
+                    
+                    if (ccmIstance.errorMessage != nil) {
+                        NSError *error = [self createErrorObject:ccmIstance.errorMessage
+                                                     errorNumber:ccmIstance.errorNumber];
+                        errorBlock(error);
+                        return;
+                    }
+                    
+                    _bytesLeft -= bytesRead;
+                    BOOL isLastBlock = (exitNext == 1);
+                    
+                    dataBlock(decrypted, isLastBlock);
+                    
+                    if (isLastBlock) {
                         break;
                     }
-                }
-                
-                NSInteger exitNext = 0;
-                
-                NSData *decrypted = [[NSData alloc] initWithBytesNoCopy:
-                                                    [ccmIstance decryptBlock:buffer
-                                                                      length:bytesRead
-                                                                    exitNext:&exitNext]
-                                                                        length:bytesRead
-                                                            freeWhenDone:NO];
-                
-                if (ccmIstance.errorMessage != nil) {
-                    NSError *error = [self createErrorObject:ccmIstance.errorMessage
-                                                 errorNumber:ccmIstance.errorNumber];
-                    errorBlock(error);
-                    return;
-                }
-                
-                _bytesLeft -= bytesRead;
-                BOOL isLastBlock = (exitNext == 1);
-                
-                dataBlock(decrypted, isLastBlock);
-                
-                if (isLastBlock) {
-                    break;
                 }
             }
         } else {

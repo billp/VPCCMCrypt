@@ -483,8 +483,12 @@
     if (_exitNext == -1) {
         [self _formatHeaderWithPayloadLength:_fileSize buffer:buffer];
         
-        long adata_len = [self _formatAssociatedData:buffer+_blockSize] + _blockSize;
-
+        long adata_len = _blockSize;
+        
+        if (_adataSize > 0) {
+            adata_len += [self _formatAssociatedData:buffer+_blockSize];
+        }
+        
         [self _formatPayload:plainDataBlock buffer:buffer+adata_len length:payloadLength];
         
         return adata_len + _blockSize;
@@ -497,6 +501,7 @@
     
     return -1;
 }
+
 
 - (void)_formatHeaderWithPayloadLength:(long long)payloadLength
                                 buffer:(unsigned char *)buffer

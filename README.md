@@ -1,10 +1,9 @@
 VPCCMCrypt
 ==========
 
+AES/CCM library in Objective-C with Streaming Support
 
-AES/CCM Implementation in Objective-C for iOS with Streaming Support
-
-#Features
+# Features
 
 - AES/128 - ECB Mode
 - Stream Encryption/Decryption methods which allows you to upload each chunk of data to server
@@ -15,14 +14,14 @@ AES/CCM Implementation in Objective-C for iOS with Streaming Support
 #Installation
 
 Add these lines to your Podfile
-```
+```objective-c
 platform :ios, '6.0'
 pod 'VPCCMCrypt', '~> 0.0.1'
 ```
 
-#Initialization
+# Initialization
 
-```
+```objective-c
 NSData *key = ...
 NSData *iv = ...
 NSData *adata = ...
@@ -33,11 +32,11 @@ VPCCMCrypt *ccm = [[VPCCMCrypt alloc] initWithKey:key
                                             adata:adata
                                         tagLength:tagLength];
 ```
-#How to use
+# How to use
 
 **Data to Data Encryption**
 
-```
+```objective-c
 NSData *plainData = ...
 
 [ccm encryptDataWithData:plainData 
@@ -50,7 +49,7 @@ NSData *plainData = ...
 
 ```
 **Data to Data Decryption:**
-```
+```objective-c
 NSData *encryptedData = ...
 
 [ccm decryptDataWithData:encryptedData 
@@ -62,7 +61,7 @@ NSData *encryptedData = ...
 ```
 **File to File Encryption**
 
-```
+```objective-c
 NSURL *sourceURL = ...
 NSURL *destinationURL = ...
 
@@ -76,7 +75,7 @@ NSURL *destinationURL = ...
 ```
 **File to File Decryption:**
 
-```
+```objective-c
 NSURL *sourceURL = ...
 NSURL *destinationURL = ...
 
@@ -91,7 +90,7 @@ NSURL *destinationURL = ...
 
 **Stream Encryption**
 
-```
+```objective-c
 NSURL *fileUrl = ...
 
 [ccm encryptStreamWithUrl:fileUrl
@@ -108,7 +107,7 @@ NSURL *fileUrl = ...
 
 **Stream Decryption**
 
-```
+```objective-c
 NSURL *fileUrl = ...
 
 [ccm decryptStreamWithUrl:fileUrl
@@ -120,5 +119,5 @@ NSURL *fileUrl = ...
                 }];
 ```
 
-#Thanks
-to Thanos Chatziathanasiou (tchatzi@arx.net) for his implementation in Perl
+# Contributors
+Special thanks to Thanos Chatziathanasiou (tchatzi@arx.net) for his implementation in Perl
